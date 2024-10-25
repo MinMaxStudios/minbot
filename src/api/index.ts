@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { getCharacters, getCount, getMessages, Users } from "../utils/db";
+import { getCount, getMessages, Users } from "../utils/db";
 
 const api = new Hono();
 
@@ -22,7 +22,6 @@ api.get("/total", (c) => {
   return c.json({
     points: users.reduce((acc, user) => acc + user.points, 0),
     messages: getMessages(),
-    characters: getCharacters(),
   });
 });
 

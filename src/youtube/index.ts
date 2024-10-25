@@ -3,7 +3,6 @@ import { YouTubeInteraction } from "./interaction";
 import { commandHandler } from "../utils/commands";
 import {
   getCount,
-  incrementCharacters,
   incrementCount,
   incrementMessages,
   Users,
@@ -24,7 +23,6 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
     activeUsers.set(interaction.author.id, Date.now());
 
     incrementMessages();
-    incrementCharacters(interaction.content.length);
 
     const [commandName, ...args] = interaction.content
       .slice("!".length)

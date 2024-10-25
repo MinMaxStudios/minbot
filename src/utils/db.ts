@@ -10,7 +10,6 @@ interface Database {
     points: number;
   }[];
   messages: number;
-  characters: number;
   count: number;
 }
 
@@ -25,7 +24,6 @@ async function initDatabase() {
       JSON.stringify({
         users: [],
         messages: 0,
-        characters: 0,
         count: 0,
       } satisfies Database)
     );
@@ -76,14 +74,6 @@ export function getMessages() {
 
 export function incrementMessages() {
   db.messages++;
-}
-
-export function getCharacters() {
-  return db.characters;
-}
-
-export function incrementCharacters(characters: number) {
-  db.characters += characters;
 }
 
 export function getCount() {
