@@ -1,6 +1,7 @@
 import { Masterchat, type AddChatItemAction } from "masterchat";
 import { YouTubeInteraction } from "./interaction";
 import { commandHandler } from "../utils/commands";
+import { Users } from "../utils/db";
 
 async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
   if (chats.length <= 0) return;
@@ -12,6 +13,12 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
       .split(" ");
     const command = commandHandler.getCommand(commandName);
     if (!command) continue;
+
+    Users.ensure(interaction.author.id, {
+      id: interaction.author.id,
+      name: interaction.author.name,
+      avatar: interaction.author.avatar,
+    });
 
     try {
       await command.run({ interaction, args });
