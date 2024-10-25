@@ -2,6 +2,7 @@ import { Masterchat, type AddChatItemAction } from "masterchat";
 import { YouTubeInteraction } from "./interaction";
 import { commandHandler } from "../utils/commands";
 import { Users } from "../utils/db";
+import { activeUsers, startPoints } from "./points";
 
 async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
   if (chats.length <= 0) return;
@@ -20,6 +21,10 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
       avatar: interaction.author.avatar,
     });
 
+    activeUsers.set(interaction.author.id, Date.now());
+
+    console.log(interaction.content);
+
     try {
       await command.run({ interaction, args });
     } catch (err) {
@@ -35,5 +40,6 @@ export async function startYouTube() {
 
   mc.on("chats", (chats) => processChats(mc, chats));
 
+  startPoints(mc);
   await mc.listen({ ignoreFirstResponse: true });
 }

@@ -7,6 +7,7 @@ interface Database {
     id: string;
     name: string;
     avatar: string;
+    points: number;
   }[];
 }
 
@@ -36,7 +37,12 @@ export class Users {
   }
 
   static insert(user: Pick<User, "id" | "name" | "avatar">) {
-    const newUser = Object.assign(user, {}) as User;
+    const newUser = Object.assign<any, Omit<User, "id" | "name" | "avatar">>(
+      user,
+      {
+        points: 0,
+      }
+    ) as User;
     db.users.push(newUser);
     return newUser;
   }
@@ -45,6 +51,12 @@ export class Users {
     const existingUser = Users.get(id);
     if (existingUser) return existingUser;
     return Users.insert(user);
+  }
+
+  static update(id: string, user: Partial<User>) {
+    const userIndex = db.users.findIndex((user) => user.id === id);
+    if (userIndex === -1) throw new Error("User not found");
+    db.users[userIndex] = Object.assign(db.users[userIndex], user);
   }
 }
 
