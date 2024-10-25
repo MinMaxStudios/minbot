@@ -1,7 +1,13 @@
 import { Masterchat, type AddChatItemAction } from "masterchat";
 import { YouTubeInteraction } from "./interaction";
 import { commandHandler } from "../utils/commands";
-import { getCount, incrementCount, Users } from "../utils/db";
+import {
+  getCount,
+  incrementCharacters,
+  incrementCount,
+  incrementMessages,
+  Users,
+} from "../utils/db";
 import { activeUsers, startPoints } from "./points";
 
 async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
@@ -16,6 +22,9 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
     });
 
     activeUsers.set(interaction.author.id, Date.now());
+
+    incrementMessages();
+    incrementCharacters(interaction.content.length);
 
     const [commandName, ...args] = interaction.content
       .slice("!".length)

@@ -9,6 +9,8 @@ interface Database {
     avatar: string;
     points: number;
   }[];
+  messages: number;
+  characters: number;
   count: number;
 }
 
@@ -22,6 +24,8 @@ async function initDatabase() {
       dbPath,
       JSON.stringify({
         users: [],
+        messages: 0,
+        characters: 0,
         count: 0,
       } satisfies Database)
     );
@@ -64,6 +68,22 @@ export class Users {
     if (userIndex === -1) throw new Error("User not found");
     db.users[userIndex] = Object.assign(db.users[userIndex], user);
   }
+}
+
+export function getMessages() {
+  return db.messages;
+}
+
+export function incrementMessages() {
+  db.messages++;
+}
+
+export function getCharacters() {
+  return db.characters;
+}
+
+export function incrementCharacters(characters: number) {
+  db.characters += characters;
 }
 
 export function getCount() {
