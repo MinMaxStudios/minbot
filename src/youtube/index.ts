@@ -55,6 +55,7 @@ export async function startYouTube() {
 
   mc.on("chats", (chats) => processChats(mc, chats));
 
+  mc.sendMessage("I have arrived!");
   startPoints(mc);
   await mc.listen({ ignoreFirstResponse: true });
 }
