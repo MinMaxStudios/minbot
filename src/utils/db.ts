@@ -36,6 +36,10 @@ export class Users {
     return db.users.find((user) => user.id === id);
   }
 
+  static getAll() {
+    return [...db.users];
+  }
+
   static insert(user: Pick<User, "id" | "name" | "avatar">) {
     const newUser = Object.assign<any, Omit<User, "id" | "name" | "avatar">>(
       user,
