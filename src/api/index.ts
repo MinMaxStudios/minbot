@@ -1,7 +1,8 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { getCount, getMessages, Users } from "../utils/db";
 
-const api = new Hono();
+const api = new Hono().use(cors());
 
 api.get("/lb/points", (c) => {
   const users = Users.getAll();
