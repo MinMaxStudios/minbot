@@ -1,7 +1,7 @@
 import { Masterchat, type AddChatItemAction } from "masterchat";
 import { YouTubeInteraction } from "./interaction";
 import { commandHandler } from "../utils/commands";
-import { Users } from "../utils/db";
+import { getCount, incrementCount, Users } from "../utils/db";
 import { activeUsers, startPoints } from "./points";
 
 async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
@@ -27,6 +27,13 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
         await command.run({ interaction, args });
       } catch (err) {
         console.error(err);
+      }
+    } else {
+      const firstPart = interaction.content.split(" ")[0];
+      const num = parseInt(firstPart.split(",").join(""));
+      if (!isNaN(num)) {
+        if (num !== getCount() + 1) return;
+        incrementCount();
       }
     }
   }

@@ -9,6 +9,7 @@ interface Database {
     avatar: string;
     points: number;
   }[];
+  count: number;
 }
 
 export type User = Database["users"][number];
@@ -21,6 +22,7 @@ async function initDatabase() {
       dbPath,
       JSON.stringify({
         users: [],
+        count: 0,
       } satisfies Database)
     );
   }
@@ -62,6 +64,14 @@ export class Users {
     if (userIndex === -1) throw new Error("User not found");
     db.users[userIndex] = Object.assign(db.users[userIndex], user);
   }
+}
+
+export function getCount() {
+  return db.count;
+}
+
+export function incrementCount() {
+  db.count++;
 }
 
 const backupsPath = join(process.cwd(), "backups");
