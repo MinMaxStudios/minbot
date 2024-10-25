@@ -3,9 +3,13 @@
   "module": "src/index.ts",
   "type": "module",
   "scripts": {
+    "dev": "bun --watch .",
     "credentials": "electron src/credential-fetcher.js"
   },
-  "dependencies": { "electron": "^33.0.2" },
+  "dependencies": {
+    "electron": "^33.0.2",
+    "masterchat": "^1.1.0"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
