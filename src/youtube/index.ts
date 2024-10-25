@@ -8,12 +8,6 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
   if (chats.length <= 0) return;
   for (const chat of chats) {
     const interaction = new YouTubeInteraction(chat, mc);
-    const [commandName, ...args] = interaction.content
-      .slice("!".length)
-      .trim()
-      .split(" ");
-    const command = commandHandler.getCommand(commandName);
-    if (!command) continue;
 
     Users.ensure(interaction.author.id, {
       id: interaction.author.id,
@@ -23,12 +17,17 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
 
     activeUsers.set(interaction.author.id, Date.now());
 
-    console.log(interaction.content);
-
-    try {
-      await command.run({ interaction, args });
-    } catch (err) {
-      console.error(err);
+    const [commandName, ...args] = interaction.content
+      .slice("!".length)
+      .trim()
+      .split(" ");
+    const command = commandHandler.getCommand(commandName);
+    if (command) {
+      try {
+        await command.run({ interaction, args });
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
 }
