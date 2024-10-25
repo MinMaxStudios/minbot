@@ -2,6 +2,10 @@
   "name": "minbot",
   "module": "src/index.ts",
   "type": "module",
+  "scripts": {
+    "credentials": "electron src/credential-fetcher.js"
+  },
+  "dependencies": { "electron": "^33.0.2" },
   "devDependencies": {
     "@types/bun": "latest"
   },
