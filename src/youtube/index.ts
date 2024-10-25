@@ -1,8 +1,24 @@
 import { Masterchat, type AddChatItemAction } from "masterchat";
+import { YouTubeInteraction } from "./interaction";
+import { commandHandler } from "../utils/commands";
 
-function processChats(chats: AddChatItemAction[]) {
+async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
   if (chats.length <= 0) return;
-  console.log(chats);
+  for (const chat of chats) {
+    const interaction = new YouTubeInteraction(chat, mc);
+    const [commandName, ...args] = interaction.content
+      .slice("!".length)
+      .trim()
+      .split(" ");
+    const command = commandHandler.getCommand(commandName);
+    if (!command) continue;
+
+    try {
+      await command.run({ interaction, args });
+    } catch (err) {
+      console.error(err);
+    }
+  }
 }
 
 export async function startYouTube() {
@@ -10,7 +26,7 @@ export async function startYouTube() {
     credentials: process.env.YOUTUBE_BOT_CREDENTIALS!,
   });
 
-  mc.on("chats", processChats);
+  mc.on("chats", (chats) => processChats(mc, chats));
 
   await mc.listen({ ignoreFirstResponse: true });
 }
