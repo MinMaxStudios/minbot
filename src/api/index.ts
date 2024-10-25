@@ -35,6 +35,6 @@ api.get("/count", (c) => {
 export function startApi() {
   Bun.serve({
     fetch: api.fetch,
-    port: 3000,
+    port: parseInt(process.env.PORT ?? "3000"),
   });
 }
