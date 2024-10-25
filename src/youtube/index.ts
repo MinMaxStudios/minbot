@@ -14,6 +14,8 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
   for (const chat of chats) {
     const interaction = new YouTubeInteraction(chat, mc);
 
+    if (interaction.author.id === process.env.YOUTUBE_BOT_ID!) return;
+
     Users.ensure(interaction.author.id, {
       id: interaction.author.id,
       name: interaction.author.name,
