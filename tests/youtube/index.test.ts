@@ -7,5 +7,6 @@ initMocks();
 test("should have started listening", async () => {
   expect(mcMock.init).toBeCalled();
   expect(mcMock.listen).toBeCalled();
+  expect(setInterval).toHaveBeenCalled();
   expect(mcMock.sendMessage).toBeCalledWith("I have arrived!");
 });
