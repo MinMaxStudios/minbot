@@ -1,7 +1,5 @@
 import { expect, test } from "bun:test";
 
-import { startYouTube } from "@/youtube";
-
 import { initMocks, mcMock } from "../mock";
 
 initMocks();
