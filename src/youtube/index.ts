@@ -30,17 +30,28 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
 
     incrementMessages();
 
-    const [commandName, ...args] = interaction.content
-      .slice("!".length)
-      .trim()
-      .split(" ");
-    const command = commandHandler.getCommand(commandName);
-    if (command) {
-      try {
-        await command.run({ interaction, args });
+    if (interaction.content.startsWith("!")) {
+      const [commandName, ...args] = interaction.content
+        .slice("!".length)
+        .trim()
+        .split(" ");
+      const command = commandHandler.getCommand(commandName);
+      if (command) {
+        try {
+          await command.run({ interaction, args });
+        }
+        catch (err) {
+          console.error(err);
+        }
       }
-      catch (err) {
-        console.error(err);
+      else {
+        const voteCommand = commandHandler.getCommand("vote");
+        try {
+          await voteCommand!.run({ interaction, args: [commandName] });
+        }
+        catch (err) {
+          console.error(err);
+        }
       }
     }
     else {

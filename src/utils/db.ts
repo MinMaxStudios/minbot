@@ -9,6 +9,10 @@ interface Database {
     avatar: string;
     points: number;
   }[];
+  votes: {
+    id: string;
+    votes: number;
+  }[];
   messages: number;
   count: number;
 }
@@ -16,16 +20,18 @@ interface Database {
 export type User = Database["users"][number];
 
 const dbPath = join(process.cwd(), "db.json");
+export const defaultDb = {
+  users: [],
+  votes: [],
+  messages: 0,
+  count: 0,
+} satisfies Database;
 
 async function initDatabase() {
   if (!existsSync(dbPath)) {
     await Bun.write(
       dbPath,
-      JSON.stringify({
-        users: [],
-        messages: 0,
-        count: 0,
-      } satisfies Database),
+      JSON.stringify(defaultDb),
     );
   }
 }
@@ -34,6 +40,11 @@ await initDatabase();
 
 const dbFile = Bun.file(dbPath);
 const db: Database = await dbFile.json();
+
+for (const key in defaultDb) {
+  if (!db[key as keyof Database])
+    (db as any)[key] = defaultDb[key as keyof Database];
+}
 
 export class Users {
   static get(id: string) {
@@ -67,6 +78,28 @@ export class Users {
     if (userIndex === -1)
       throw new Error("User not found");
     db.users[userIndex] = Object.assign(db.users[userIndex], user);
+  }
+}
+
+export class Votes {
+  static get(id: string) {
+    return db.votes.find(vote => vote.id === id);
+  }
+
+  static getAll() {
+    return [...db.votes];
+  }
+
+  static vote(id: string) {
+    const vote = Votes.get(id);
+    if (vote) {
+      vote.votes++;
+      return;
+    }
+    db.votes.push({
+      id,
+      votes: 1,
+    });
   }
 }
 

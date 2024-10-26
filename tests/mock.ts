@@ -3,6 +3,8 @@ import { stringify } from "masterchat";
 import { EventEmitter } from "node:events";
 import * as fs from "node:fs/promises";
 
+import { defaultDb } from "@/utils/db";
+
 const baseMcMock = {
   listen: mock(),
   sendMessage: mock(),
@@ -28,13 +30,9 @@ export function initMocks() {
     existsSync: mock(() => true),
   }));
   spyOn(fs, "mkdir").mockImplementation(() => Promise.resolve() as any);
-  spyOn(Bun, "file").mockImplementation(() => {
+  spyOn(Bun, "file").mockImplementation((_) => {
     return {
-      json: mock(() => ({
-        users: [],
-        messages: 0,
-        count: 0,
-      })),
+      json: mock(() => defaultDb),
     } as any;
   });
 }
