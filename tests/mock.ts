@@ -36,3 +36,22 @@ export function initMocks() {
     } as any;
   });
 }
+
+export function mockChatMessage(text: string) {
+  mcMock.emit(
+    "chats",
+    [
+      {
+        authorName: "ToastedToast",
+        authorPhoto: "https://toasted.dev/logo.png",
+        authorChannelId: "UC7Pw1zHdjkBXY3q8mVoLdQ",
+        message: [
+          {
+            text,
+          },
+        ],
+      },
+    ],
+    mcMock,
+  );
+}

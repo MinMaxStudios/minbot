@@ -4,7 +4,7 @@ import { initMocks, mcMock } from "../mock";
 
 initMocks();
 
-test("should start listening", async () => {
+test("should have started listening", async () => {
   expect(mcMock.init).toBeCalled();
   expect(mcMock.listen).toBeCalled();
   expect(mcMock.sendMessage).toBeCalledWith("I have arrived!");
