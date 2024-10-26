@@ -1,7 +1,7 @@
-import { mock } from "bun:test";
+import { mock, spyOn } from "bun:test";
 import { stringify } from "masterchat";
 import { EventEmitter } from "node:events";
-import { readdir } from "node:fs/promises";
+import * as fs from "node:fs/promises";
 
 const baseMcMock = {
   listen: mock(),
@@ -27,10 +27,14 @@ export function initMocks() {
   mock.module("node:fs", () => ({
     existsSync: mock(() => true),
   }));
-  mock.module("node:fs/promises", () => ({
-    readFile: mock(),
-    writeFile: mock(),
-    readdir,
-    mkdir: mock(),
-  }));
+  spyOn(fs, "mkdir").mockImplementation(() => Promise.resolve() as any);
+  spyOn(Bun, "file").mockImplementation((path) => {
+    return {
+      json: mock(() => ({
+        users: [],
+        messages: 0,
+        count: 0,
+      })),
+    } as any;
+  });
 }
