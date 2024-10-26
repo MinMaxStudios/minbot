@@ -2,7 +2,8 @@ import type { YTRun } from "masterchat";
 
 import { describe, expect, test } from "bun:test";
 
-import { getCount } from "../../src/utils/db";
+import { getCount } from "@/utils/db";
+
 import { initMocks, mcMock } from "../mock";
 
 initMocks();

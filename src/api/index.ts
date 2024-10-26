@@ -3,7 +3,7 @@ import { cors } from "hono/cors";
 
 import { getCount, getMessages, Users } from "@/utils/db";
 
-const api = new Hono().use(cors());
+export const api = new Hono().use(cors());
 
 api.get("/lb/points", (c) => {
   const users = Users.getAll();
@@ -32,10 +32,3 @@ api.get("/count", (c) => {
     count: getCount(),
   });
 });
-
-export function startApi() {
-  Bun.serve({
-    fetch: api.fetch,
-    port: Number.parseInt(process.env.PORT ?? "3000"),
-  });
-}
