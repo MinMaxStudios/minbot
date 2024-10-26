@@ -1,7 +1,9 @@
-import { expect, test, describe } from "bun:test";
-import { initMocks, mcMock } from "../mock";
 import type { YTRun } from "masterchat";
+
+import { describe, expect, test } from "bun:test";
+
 import { getCount } from "../../src/utils/db";
+import { initMocks, mcMock } from "../mock";
 
 initMocks();
 
@@ -21,7 +23,7 @@ describe("counting", () => {
           ] as YTRun[],
         },
       ],
-      mcMock
+      mcMock,
     );
     expect(getCount()).toBe(1);
   });
@@ -41,7 +43,7 @@ describe("counting", () => {
           ] as YTRun[],
         },
       ],
-      mcMock
+      mcMock,
     );
     expect(getCount()).toBe(1);
   });
@@ -61,7 +63,7 @@ describe("counting", () => {
           ] as YTRun[],
         },
       ],
-      mcMock
+      mcMock,
     );
     expect(getCount()).toBe(1);
   });

@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { getCount, getMessages, Users } from "../utils/db";
+
+import { getCount, getMessages, Users } from "@/utils/db";
 
 const api = new Hono().use(cors());
 
@@ -9,7 +10,7 @@ api.get("/lb/points", (c) => {
   return c.json({
     users: users
       .sort((a, b) => b.points - a.points)
-      .map((user) => ({
+      .map(user => ({
         id: user.id,
         name: user.name,
         avatar: user.avatar,
@@ -35,6 +36,6 @@ api.get("/count", (c) => {
 export function startApi() {
   Bun.serve({
     fetch: api.fetch,
-    port: parseInt(process.env.PORT ?? "3000"),
+    port: Number.parseInt(process.env.PORT ?? "3000"),
   });
 }

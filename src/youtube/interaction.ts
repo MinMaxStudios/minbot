@@ -1,5 +1,7 @@
-import { stringify, type AddChatItemAction, type Masterchat } from "masterchat";
-import type { Interaction } from "../utils/commands";
+import { type AddChatItemAction, type Masterchat, stringify } from "masterchat";
+
+import type { Interaction } from "@/utils/commands";
+
 import { sendMessage } from "./utils";
 
 export class YouTubeInteraction implements Interaction {

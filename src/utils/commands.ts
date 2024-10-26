@@ -30,14 +30,14 @@ class CommandHandler {
   private commands: Map<string, Command>;
 
   constructor(commands: Command[]) {
-    this.commands = new Map(commands.map((command) => [command.name, command]));
+    this.commands = new Map(commands.map(command => [command.name, command]));
   }
 
   getCommand(name: string) {
     return (
-      this.commands.get(name.toLowerCase()) ??
-      [...this.commands.values()].find((command) =>
-        command.aliases?.includes(name.toLowerCase())
+      this.commands.get(name.toLowerCase())
+      ?? [...this.commands.values()].find(command =>
+        command.aliases?.includes(name.toLowerCase()),
       )
     );
   }

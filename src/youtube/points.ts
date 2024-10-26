@@ -1,5 +1,7 @@
 import type { Masterchat } from "masterchat";
-import { Users } from "../utils/db";
+
+import { Users } from "@/utils/db";
+
 import { sendMessage } from "./utils";
 
 export const activeUsers = new Map<string, number>();
@@ -11,7 +13,8 @@ function random(min: number, max: number) {
 
 export function startPoints(mc: Masterchat) {
   setInterval(() => {
-    if (activeUsers.size === 0) return;
+    if (activeUsers.size === 0)
+      return;
 
     for (const [userId, lastMessageTime] of activeUsers) {
       if (Date.now() - lastMessageTime > POINTS_DURATION)
@@ -22,12 +25,13 @@ export function startPoints(mc: Masterchat) {
       });
     }
 
-    if (activeUsers.size > 0)
+    if (activeUsers.size > 0) {
       sendMessage(
         mc,
         `${activeUsers.size} user${activeUsers.size !== 1 ? "s" : ""} ${
           activeUsers.size !== 1 ? "have" : "has"
-        } been given points!`
+        } been given points!`,
       );
+    }
   }, POINTS_DURATION);
 }

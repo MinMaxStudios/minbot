@@ -15,8 +15,8 @@ export const mcMock = new EventEmitter() as EventEmitter &
 mcMock.init = mock(() => mcMock);
 
 for (const key in baseMcMock) {
-  mcMock[key as keyof typeof baseMcMock] =
-    baseMcMock[key as keyof typeof baseMcMock];
+  mcMock[key as keyof typeof baseMcMock]
+    = baseMcMock[key as keyof typeof baseMcMock];
 }
 
 export function initMocks() {
@@ -28,7 +28,7 @@ export function initMocks() {
     existsSync: mock(() => true),
   }));
   spyOn(fs, "mkdir").mockImplementation(() => Promise.resolve() as any);
-  spyOn(Bun, "file").mockImplementation((path) => {
+  spyOn(Bun, "file").mockImplementation(() => {
     return {
       json: mock(() => ({
         users: [],

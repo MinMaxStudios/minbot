@@ -25,7 +25,7 @@ async function initDatabase() {
         users: [],
         messages: 0,
         count: 0,
-      } satisfies Database)
+      } satisfies Database),
     );
   }
 }
@@ -37,7 +37,7 @@ const db: Database = await dbFile.json();
 
 export class Users {
   static get(id: string) {
-    return db.users.find((user) => user.id === id);
+    return db.users.find(user => user.id === id);
   }
 
   static getAll() {
@@ -49,7 +49,7 @@ export class Users {
       user,
       {
         points: 0,
-      }
+      },
     ) as User;
     db.users.push(newUser);
     return newUser;
@@ -57,13 +57,15 @@ export class Users {
 
   static ensure(id: string, user: Pick<User, "id" | "name" | "avatar">) {
     const existingUser = Users.get(id);
-    if (existingUser) return existingUser;
+    if (existingUser)
+      return existingUser;
     return Users.insert(user);
   }
 
   static update(id: string, user: Partial<User>) {
-    const userIndex = db.users.findIndex((user) => user.id === id);
-    if (userIndex === -1) throw new Error("User not found");
+    const userIndex = db.users.findIndex(user => user.id === id);
+    if (userIndex === -1)
+      throw new Error("User not found");
     db.users[userIndex] = Object.assign(db.users[userIndex], user);
   }
 }
@@ -86,10 +88,11 @@ export function incrementCount() {
 
 const backupsPath = join(process.cwd(), "backups");
 setInterval(async () => {
-  if (!existsSync(backupsPath)) await mkdir(backupsPath);
+  if (!existsSync(backupsPath))
+    await mkdir(backupsPath);
   await Bun.write(
     join(backupsPath, `db-${Date.now()}.json`),
-    JSON.stringify(db)
+    JSON.stringify(db),
   );
 
   await Bun.write(dbPath, JSON.stringify(db));

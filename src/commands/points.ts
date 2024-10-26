@@ -1,5 +1,6 @@
-import type { Command } from "../utils/commands";
-import { Users } from "../utils/db";
+import type { Command } from "@/utils/commands";
+
+import { Users } from "@/utils/db";
 
 export default {
   name: "points",
@@ -8,7 +9,7 @@ export default {
     interaction.reply(
       `${interaction.author.name}, you currently have ${
         user?.points ?? 0
-      } points.`
+      } points.`,
     );
   },
 } satisfies Command;

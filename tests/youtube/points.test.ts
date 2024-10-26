@@ -1,7 +1,9 @@
-import { expect, test, describe } from "bun:test";
-import { initMocks, mcMock } from "../mock";
 import type { YTRun } from "masterchat";
+
+import { describe, expect, test } from "bun:test";
+
 import { activeUsers } from "../../src/youtube/points";
+import { initMocks, mcMock } from "../mock";
 
 initMocks();
 
@@ -21,10 +23,10 @@ describe("points", () => {
           ] as YTRun[],
         },
       ],
-      mcMock
+      mcMock,
     );
     expect(mcMock.sendMessage).toBeCalledWith(
-      "ToastedToast, you currently have 0 points."
+      "ToastedToast, you currently have 0 points.",
     );
   });
 

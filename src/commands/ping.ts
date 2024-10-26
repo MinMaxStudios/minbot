@@ -1,4 +1,4 @@
-import type { Command } from "../utils/commands";
+import type { Command } from "@/utils/commands";
 
 export default {
   name: "ping",

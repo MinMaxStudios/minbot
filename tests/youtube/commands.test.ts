@@ -1,5 +1,7 @@
-import { expect, test, describe } from "bun:test";
 import type { YTRun } from "masterchat";
+
+import { describe, expect, test } from "bun:test";
+
 import { mcMock } from "../mock";
 
 describe("commands", () => {
@@ -18,7 +20,7 @@ describe("commands", () => {
           ] as YTRun[],
         },
       ],
-      mcMock
+      mcMock,
     );
     expect(mcMock.sendMessage).toBeCalledWith("Pong!");
   });
