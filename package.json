@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun --watch .",
+    "typecheck": "tsc --noEmit",
     "credentials": "electron src/credential-fetcher.js"
   },
   "dependencies": {
