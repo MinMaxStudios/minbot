@@ -21,6 +21,10 @@ describe("commands", () => {
     });
     expect(mcMock.sendMessage).toBeCalled();
   });
+  test("should be able to run the iq command", () => {
+    mockChatMessage("!iq");
+    expect(mcMock.sendMessage).toBeCalled();
+  });
   test("should ignore specified commands to ignore", () => {
     mcMock.sendMessage.mockClear();
     mockChatMessage("!sr");
