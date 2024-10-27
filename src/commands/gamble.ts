@@ -42,7 +42,7 @@ export default {
       interaction.reply(
         `${
           interaction.author.name
-        }, you won ${amountWon.toLocaleString()} graphs! You now have ${user.points.toLocaleString()} graphs.`,
+        }, you won ${amountWon.toLocaleString()} points! You now have ${user.points.toLocaleString()} points.`,
       );
     }
     else {
@@ -52,7 +52,7 @@ export default {
       interaction.reply(
         `${
           interaction.author.name
-        }, you lost ${amount.toLocaleString()} graphs. You now have ${user.points.toLocaleString()} graphs.`,
+        }, you lost ${amount.toLocaleString()} points. You now have ${user.points.toLocaleString()} points.`,
       );
     }
   },
