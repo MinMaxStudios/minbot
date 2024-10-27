@@ -37,13 +37,13 @@ export function initMocks() {
   });
 }
 
-export function mockChatMessage(text: string) {
+export function mockChatMessage(text: string, name?: string, avatar?: string) {
   mcMock.emit(
     "chats",
     [
       {
-        authorName: "ToastedToast",
-        authorPhoto: "https://toasted.dev/logo.png",
+        authorName: name ?? "ToastedToast",
+        authorPhoto: avatar ?? "https://toasted.dev/logo.png",
         authorChannelId: "UC7Pw1zHdjkBXY3q8mVoLdQ",
         message: [
           {

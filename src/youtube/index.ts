@@ -36,6 +36,18 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
       avatar: interaction.author.avatar,
     });
 
+    const user = Users.get(interaction.author.id)!;
+    if (user.name !== interaction.author.name) {
+      Users.update(interaction.author.id, {
+        name: interaction.author.name,
+      });
+    }
+    if (user.avatar !== interaction.author.avatar) {
+      Users.update(interaction.author.id, {
+        avatar: interaction.author.avatar,
+      });
+    }
+
     activeUsers.set(interaction.author.id, Date.now());
 
     if (interaction.content.startsWith("!")) {
