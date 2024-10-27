@@ -7,6 +7,18 @@ describe("commands", () => {
     mockChatMessage("!ping");
     expect(mcMock.sendMessage).toBeCalledWith("Pong!");
   });
+  test("should be able to run the subs command", () => {
+    mockChatMessage("!subs");
+    expect(mcMock.sendMessage).toBeCalled();
+  });
+  test("should be able to run the views command", () => {
+    mockChatMessage("!views", {
+      id: "UCkaQHnnaXDmdu-OhaCeJUGA",
+      name: "MinMax",
+      avatar: "https://toasted.dev/logo.png",
+    });
+    expect(mcMock.sendMessage).toBeCalled();
+  });
   test("should ignore specified commands to ignore", () => {
     mcMock.sendMessage.mockClear();
     mockChatMessage("!sr");

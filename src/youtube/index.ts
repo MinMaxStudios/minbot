@@ -74,11 +74,13 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
 
         try {
           await command.run({ interaction, args });
-          Cooldowns.insert({
-            id: interaction.author.id,
-            command: commandName,
-            time: Date.now(),
-          });
+          if (command.cooldown) {
+            Cooldowns.insert({
+              id: interaction.author.id,
+              command: commandName,
+              time: Date.now(),
+            });
+          }
         }
         catch (err) {
           if (typeof err === "string")

@@ -35,16 +35,32 @@ export function initMocks() {
       json: mock(() => defaultDb),
     } as any;
   });
+  spyOn(globalThis, "fetch").mockImplementation(() => Promise.resolve({
+    json: mock(() => Promise.resolve({
+      items: [
+        {
+          statistics: {
+            subscriberCount: "100",
+            viewCount: "1000",
+          },
+        },
+      ],
+    })),
+  } as any));
 }
 
-export function mockChatMessage(text: string, name?: string, avatar?: string) {
+export function mockChatMessage(text: string, user?: {
+  id?: string;
+  name?: string;
+  avatar?: string;
+}) {
   mcMock.emit(
     "chats",
     [
       {
-        authorName: name ?? "ToastedToast",
-        authorPhoto: avatar ?? "https://toasted.dev/logo.png",
-        authorChannelId: "UC7Pw1zHdjkBXY3q8mVoLdQ",
+        authorName: user?.name ?? "ToastedToast",
+        authorPhoto: user?.avatar ?? "https://toasted.dev/logo.png",
+        authorChannelId: user?.id ?? "UC7Pw1zHdjkBXY3q8mVoLdQ",
         message: [
           {
             text,
