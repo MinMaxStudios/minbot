@@ -8,14 +8,16 @@ describe("commands", () => {
     expect(mcMock.sendMessage).toBeCalledWith("Pong!");
   });
   test("should be able to run the subs command", () => {
-    mockChatMessage("!subs");
+    mockChatMessage("!subs", {
+      id: "UCkaQHnnaXDmdu-OhaCeJUGA",
+      name: "MinMax",
+    });
     expect(mcMock.sendMessage).toBeCalled();
   });
   test("should be able to run the views command", () => {
     mockChatMessage("!views", {
       id: "UCkaQHnnaXDmdu-OhaCeJUGA",
       name: "MinMax",
-      avatar: "https://toasted.dev/logo.png",
     });
     expect(mcMock.sendMessage).toBeCalled();
   });
