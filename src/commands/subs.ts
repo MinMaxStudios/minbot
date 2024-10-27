@@ -21,7 +21,7 @@ export default {
       subcount = data.mrbeast;
     }
     else {
-      const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&&fields=items/snippet/name,items/statistics/subscriberCount&id=${channelId}&key=${process.env.YOUTUBE_API_KEY}`);
+      const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${channelId}&key=${process.env.YOUTUBE_API_KEY}`);
       const data = await res.json();
       name = data.items[0].snippet.name;
       subcount = Number.parseInt(data.items[0].statistics.subscriberCount);
