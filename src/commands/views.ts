@@ -1,8 +1,7 @@
 import type { Command } from "@/utils/commands";
 
 export default {
-  name: "subs",
-  aliases: ["subscribers"],
+  name: "views",
   run: async ({ interaction }) => {
     const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&&fields=items/statistics/viewCount&id=${interaction.author.id}&key=${process.env.YOUTUBE_API_KEY}`);
     const data = await res.json();
