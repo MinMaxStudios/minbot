@@ -4,7 +4,13 @@ export default {
   name: "subs",
   aliases: ["subscribers"],
   run: async ({ interaction, args }) => {
-    const channelId = args[0] ?? interaction.author.id;
+    let channelId = args[0] ?? interaction.author.id;
+    if (!channelId.startsWith("UC")) {
+      const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=id&type=channel&q=${channelId}&key=${process.env.YOUTUBE_API_KEY}`);
+      const data = await res.json();
+      channelId = data.items[0].id.channelId;
+    }
+
     let name: string = "";
     let subcount: number = 0;
 
