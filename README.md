@@ -1,15 +1,5 @@
-# minbot
+# MinBot
 
-To install dependencies:
+The official YouTube chat bot of [MinMax](https://youtube.com/@MinMaxStats).
 
-```bash
-bun install
-```
-
-To run:
-
-```bash
-bun run src/index.ts
-```
-
-This project was created using `bun init` in bun v1.1.32. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+![image](https://github.com/user-attachments/assets/c41b6986-9db2-4a54-9325-8b7a17344b8c)
