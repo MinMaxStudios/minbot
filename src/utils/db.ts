@@ -146,3 +146,7 @@ setInterval(async () => {
 
   await Bun.write(dbPath, JSON.stringify(db));
 }, 60_000);
+
+process.on("beforeExit", async () => {
+  await Bun.write(dbPath, JSON.stringify(db));
+});
