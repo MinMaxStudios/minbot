@@ -11,12 +11,20 @@ import {
 import { YouTubeInteraction } from "./interaction";
 import { activeUsers, startPoints } from "./points";
 
+const commandsToIgnore = [
+  "sr",
+  "skip",
+  "currentsong",
+  "queue",
+];
+
 async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
   if (chats.length <= 0)
     return;
   for (const chat of chats) {
-    const interaction = new YouTubeInteraction(chat, mc);
+    incrementMessages();
 
+    const interaction = new YouTubeInteraction(chat, mc);
     if (interaction.author.id === process.env.YOUTUBE_BOT_ID!)
       return;
 
@@ -28,13 +36,14 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
 
     activeUsers.set(interaction.author.id, Date.now());
 
-    incrementMessages();
-
     if (interaction.content.startsWith("!")) {
       const [commandName, ...args] = interaction.content
         .slice("!".length)
         .trim()
         .split(" ");
+      if (commandsToIgnore.includes(commandName))
+        return;
+
       const command = commandHandler.getCommand(commandName);
       if (command) {
         try {

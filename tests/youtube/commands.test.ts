@@ -7,4 +7,12 @@ describe("commands", () => {
     mockChatMessage("!ping");
     expect(mcMock.sendMessage).toBeCalledWith("Pong!");
   });
+  test("should ignore specified commands to ignore", () => {
+    mcMock.sendMessage.mockClear();
+    mockChatMessage("!sr");
+    mockChatMessage("!skip");
+    mockChatMessage("!currentsong");
+    mockChatMessage("!queue");
+    expect(mcMock.sendMessage).not.toHaveBeenCalled();
+  });
 });

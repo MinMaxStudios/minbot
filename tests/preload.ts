@@ -2,7 +2,7 @@ import { afterEach, beforeAll, mock } from "bun:test";
 
 import { startYouTube } from "@/youtube";
 
-import { initMocks } from "./mock";
+import { initMocks, mcMock } from "./mock";
 
 initMocks();
 
