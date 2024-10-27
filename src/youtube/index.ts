@@ -1,7 +1,9 @@
 import { type AddChatItemAction, Masterchat } from "masterchat";
+import ms from "ms";
 
 import { commandHandler } from "@/utils/commands";
 import {
+  Cooldowns,
   getCount,
   incrementCount,
   incrementMessages,
@@ -46,10 +48,29 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
 
       const command = commandHandler.getCommand(commandName);
       if (command) {
+        if (command.cooldown) {
+          const cooldown = Cooldowns.get(interaction.author.id, commandName);
+          if (cooldown && Date.now() - cooldown.time < command.cooldown) {
+            return interaction.reply(
+              `${interaction.author.name}, you're on cooldown! Please wait ${ms(
+                command.cooldown - (Date.now() - cooldown.time),
+                { long: true },
+              )} before using this command again.`,
+            );
+          }
+        }
+
         try {
           await command.run({ interaction, args });
+          Cooldowns.insert({
+            id: interaction.author.id,
+            command: commandName,
+            time: Date.now(),
+          });
         }
         catch (err) {
+          if (typeof err === "string")
+            return;
           console.error(err);
         }
       }

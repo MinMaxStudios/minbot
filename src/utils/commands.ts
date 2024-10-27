@@ -11,12 +11,13 @@ export interface Interaction {
     name: string;
     avatar: string;
   };
-  reply: (content: string) => void;
+  reply: (content: string) => string;
 }
 
 export interface Command {
   name: string;
   aliases?: string[];
+  cooldown?: number;
   run: ({
     interaction,
     args,

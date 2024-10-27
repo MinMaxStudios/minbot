@@ -9,6 +9,11 @@ interface Database {
     avatar: string;
     points: number;
   }[];
+  cooldowns: {
+    id: string;
+    command: string;
+    time: number;
+  }[];
   votes: {
     id: string;
     votes: number;
@@ -23,6 +28,7 @@ const dbPath = join(process.cwd(), "db.json");
 export const defaultDb = {
   users: [],
   votes: [],
+  cooldowns: [],
   messages: 0,
   count: 0,
 } satisfies Database;
@@ -100,6 +106,16 @@ export class Votes {
       id,
       votes: 1,
     });
+  }
+}
+
+export class Cooldowns {
+  static get(id: string, command: string) {
+    return db.cooldowns.find(cooldown => cooldown.id === id && cooldown.command === command);
+  }
+
+  static insert(cooldown: Database["cooldowns"][number]) {
+    db.cooldowns.push(cooldown);
   }
 }
 

@@ -28,5 +28,6 @@ export class YouTubeInteraction implements Interaction {
 
   reply(content: string) {
     sendMessage(this.mc, content);
+    return content;
   }
 }
