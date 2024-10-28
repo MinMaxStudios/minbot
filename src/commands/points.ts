@@ -7,7 +7,9 @@ export default {
   run: ({ interaction }) => {
     const user = Users.get(interaction.author.id);
     const allUsers = Users.getAll();
-    const rank = allUsers.findIndex(u => u.id === interaction.author.id) + 1;
+    const rank = allUsers
+      .sort((a, b) => b.points - a.points)
+      .findIndex(u => u.id === interaction.author.id) + 1;
     interaction.reply(
       `${interaction.author.name}, you currently have ${
         user?.points ?? 0
