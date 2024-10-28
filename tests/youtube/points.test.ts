@@ -11,7 +11,7 @@ describe("points", () => {
   test("should make a user with 0 points", () => {
     mockChatMessage("!points");
     expect(mcMock.sendMessage).toBeCalledWith(
-      "ToastedToast, you currently have 0 points.",
+      "ToastedToast, you currently have 0 points, and are rank #1.",
     );
   });
 
