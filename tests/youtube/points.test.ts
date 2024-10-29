@@ -27,17 +27,17 @@ describe("points", () => {
       );
     });
 
-    test("should not be able to gamble less than 50 points", () => {
+    test("should not be able to gamble less than 25 points", () => {
       mockChatMessage("!gamble 10");
       expect(mcMock.sendMessage).toBeCalledWith(
-        "ToastedToast, you need to bet more than 50 points.",
+        "ToastedToast, you need to bet more than 25 points.",
       );
     });
 
-    test("should not be able to gamble with less than 50 points", () => {
-      mockChatMessage("!gamble 50");
+    test("should not be able to gamble with less than 25 points", () => {
+      mockChatMessage("!gamble 25");
       expect(mcMock.sendMessage).toBeCalledWith(
-        "ToastedToast, you don't have enough points to gamble 50.",
+        "ToastedToast, you don't have enough points to gamble 25.",
       );
     });
 

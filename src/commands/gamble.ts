@@ -15,9 +15,9 @@ export default {
     const amount = Number.parseInt(args[0]);
     if (Number.isNaN(amount))
       throw interaction.reply(`${interaction.author.name}, that's not a number.`);
-    if (amount < 50) {
+    if (amount < 25) {
       throw interaction.reply(
-        `${interaction.author.name}, you need to bet more than 50 points.`,
+        `${interaction.author.name}, you need to bet more than 25 points.`,
       );
     }
 
