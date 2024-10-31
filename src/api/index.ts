@@ -19,6 +19,20 @@ api.get("/lb/points", (c) => {
   });
 });
 
+api.get("/lb/daily-points", (c) => {
+  const users = Users.getAll();
+  return c.json({
+    users: users
+      .sort((a, b) => b.dailyPoints - a.dailyPoints)
+      .map(user => ({
+        id: user.id,
+        name: user.name,
+        avatar: user.avatar,
+        points: user.dailyPoints,
+      })),
+  });
+});
+
 api.get("/total", (c) => {
   const users = Users.getAll();
   return c.json({
