@@ -24,6 +24,7 @@ export function startPoints(mc: Masterchat) {
 
       Users.update(userId, {
         points: Users.get(userId)!.points + random(1, 5),
+        dailyPoints: Users.get(userId)!.dailyPoints + random(1, 5),
       });
     }
 
