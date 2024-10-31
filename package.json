@@ -6,6 +6,7 @@
     "dev": "bun --watch .",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
+    "db:update": "bun src/update-db.ts",
     "credentials": "electron src/credential-fetcher.js"
   },
   "peerDependencies": {

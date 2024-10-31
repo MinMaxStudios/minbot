@@ -48,18 +48,6 @@ if (!existsSync(dbPath)) {
 const dbFile = Bun.file(dbPath);
 const db: Database = await dbFile.json();
 
-for (const key in defaultDb) {
-  if (!db[key as keyof Database])
-    (db as any)[key] = defaultDb[key as keyof Database];
-}
-
-for (const user of db.users) {
-  for (const key in defaultUser) {
-    if (!user[key as keyof User])
-      (db as any).users[db.users.indexOf(user)] = (defaultUser as any)[key];
-  }
-}
-
 export class Users {
   static get(id: string) {
     return db.users.find(user => user.id === id);
