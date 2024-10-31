@@ -8,6 +8,7 @@ interface Database {
     name: string;
     avatar: string;
     points: number;
+    dailyPoints: number;
   }[];
   cooldowns: {
     id: string;
@@ -32,17 +33,17 @@ export const defaultDb = {
   messages: 0,
   count: 0,
 } satisfies Database;
+export const defaultUser = {
+  points: 0,
+  dailyPoints: 0,
+};
 
-async function initDatabase() {
-  if (!existsSync(dbPath)) {
-    await Bun.write(
-      dbPath,
-      JSON.stringify(defaultDb),
-    );
-  }
+if (!existsSync(dbPath)) {
+  await Bun.write(
+    dbPath,
+    JSON.stringify(defaultDb),
+  );
 }
-
-await initDatabase();
 
 const dbFile = Bun.file(dbPath);
 const db: Database = await dbFile.json();
@@ -50,6 +51,13 @@ const db: Database = await dbFile.json();
 for (const key in defaultDb) {
   if (!db[key as keyof Database])
     (db as any)[key] = defaultDb[key as keyof Database];
+}
+
+for (const user of db.users) {
+  for (const key in defaultUser) {
+    if (!user[key as keyof User])
+      (db as any).users[db.users.indexOf(user)] = (defaultUser as any)[key];
+  }
 }
 
 export class Users {
@@ -64,9 +72,7 @@ export class Users {
   static insert(user: Pick<User, "id" | "name" | "avatar">) {
     const newUser = Object.assign<any, Omit<User, "id" | "name" | "avatar">>(
       user,
-      {
-        points: 0,
-      },
+      defaultUser,
     ) as User;
     db.users.push(newUser);
     return newUser;

@@ -1,5 +1,7 @@
 import type { Masterchat } from "masterchat";
 
+import { CronJob } from "cron";
+
 import { Users } from "@/utils/db";
 
 import { sendMessage } from "./utils";
@@ -34,4 +36,18 @@ export function startPoints(mc: Masterchat) {
       );
     }
   }, POINTS_DURATION);
+
+  const cron = CronJob.from({
+    cronTime: "0 0 * * *",
+    onTick: () => {
+      const users = Users.getAll();
+      for (const user of users) {
+        Users.update(user.id, {
+          dailyPoints: 0,
+        });
+      }
+    },
+    timeZone: "Asia/Manila",
+  });
+  cron.start();
 }
