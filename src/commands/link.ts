@@ -39,7 +39,7 @@ export default {
 
       const user = Users.get(interaction.author.id)!;
       const mainUser = Users.get(id)!;
-      Users.update(result.item.id, {
+      Users.update(id, {
         points: mainUser.points + user.points,
         dailyPoints: mainUser.dailyPoints + user.dailyPoints,
       });
