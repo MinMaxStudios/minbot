@@ -21,7 +21,13 @@ export default {
       );
     }
 
-    const user = Users.get(interaction.author.id)!;
+    let userId = interaction.author.id;
+    let user = Users.get(interaction.author.id)!;
+    if (user.mainId) {
+      userId = user.mainId;
+      user = Users.get(user.mainId)!;
+    }
+
     if (amount > user.points) {
       throw interaction.reply(
         `${
@@ -37,7 +43,7 @@ export default {
       );
 
       user.points += amountWon;
-      Users.update(interaction.author.id, user);
+      Users.update(userId, user);
 
       interaction.reply(
         `${
@@ -47,7 +53,7 @@ export default {
     }
     else {
       user.points -= amount;
-      Users.update(interaction.author.id, user);
+      Users.update(userId, user);
 
       interaction.reply(
         `${
