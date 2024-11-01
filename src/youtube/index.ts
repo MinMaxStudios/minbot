@@ -50,7 +50,7 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
 
     activeUsers.set(interaction.author.id, Date.now());
     if (user.mainId) {
-      activeUsers.set(interaction.author.id, Date.now());
+      activeUsers.set(user.mainId, Date.now());
     }
 
     if (interaction.content.startsWith("!")) {
