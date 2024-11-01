@@ -48,8 +48,3 @@ api.get("/count", (c) => {
     count: getCount(),
   });
 });
-
-Bun.serve({
-  fetch: api.fetch,
-  port: Number.parseInt(process.env.PORT ?? "3000"),
-});
