@@ -30,7 +30,7 @@ export default {
     const linkRequest = linkRequests.get(result.item.id);
     const mainLinkRequestKey = [...linkRequests.entries()].find(([, { id }]) => id === result.item.id)?.[0];
     if (linkRequest) {
-      throw interaction.reply(`${interaction.author.name}, you already have a link request for this user. Please go to ${linkRequest.name} and type !link ${interaction.author.name}.`);
+      throw interaction.reply(`${interaction.author.name}, you already have a link request for this user. Please go to ${result.item.name} and type !link ${interaction.author.name}.`);
     }
 
     if (mainLinkRequestKey) {

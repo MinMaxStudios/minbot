@@ -5,13 +5,17 @@ import { Users } from "@/utils/db";
 export default {
   name: "points",
   run: ({ interaction }) => {
-    const user = Users.get(interaction.author.id);
+    let user = Users.get(interaction.author.id)!;
+    if (user.mainId) {
+      user = Users.get(user.mainId)!;
+    }
+
     const allUsers = Users.getAll();
     const rank = allUsers
       .sort((a, b) => b.points - a.points)
-      .findIndex(u => u.id === interaction.author.id) + 1;
+      .findIndex(u => u.id === user.id) + 1;
     interaction.reply(
-      `${interaction.author.name}, you currently have ${
+      `${user.name}, you currently have ${
         user?.points ?? 0
       } points, and are rank #${rank}.`,
     );
