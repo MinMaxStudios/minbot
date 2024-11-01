@@ -15,7 +15,7 @@ export default {
       .sort((a, b) => b.points - a.points)
       .findIndex(u => u.id === user.id) + 1;
     interaction.reply(
-      `${user.name}, you currently have ${
+      `${interaction.author.name}, you currently have ${
         user?.points ?? 0
       } points, and are rank #${rank}.`,
     );
