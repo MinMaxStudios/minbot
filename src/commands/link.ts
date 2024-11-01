@@ -42,6 +42,7 @@ export default {
       Users.update(id, {
         points: mainUser.points + user.points,
         dailyPoints: mainUser.dailyPoints + user.dailyPoints,
+        mainId: undefined,
       });
       Users.update(interaction.author.id, {
         points: 0,
