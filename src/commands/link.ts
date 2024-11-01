@@ -27,6 +27,10 @@ export default {
     }
 
     const result = results[0];
+    if (result.item.id === interaction.author.id) {
+      throw interaction.reply(`${interaction.author.name}, you can't link your current account to itself.`);
+    }
+
     const linkRequest = linkRequests.get(result.item.id);
     const mainLinkRequestKey = [...linkRequests.entries()].find(([, { id }]) => id === result.item.id)?.[0];
     if (linkRequest) {
