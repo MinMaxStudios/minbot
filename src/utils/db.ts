@@ -9,6 +9,7 @@ interface Database {
     avatar: string;
     points: number;
     dailyPoints: number;
+    mainId?: string;
   }[];
   cooldowns: {
     id: string;

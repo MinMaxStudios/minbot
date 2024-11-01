@@ -48,7 +48,7 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
       });
     }
 
-    activeUsers.set(interaction.author.id, Date.now());
+    activeUsers.set(user.mainId ?? interaction.author.id, Date.now());
 
     if (interaction.content.startsWith("!")) {
       const [commandName, ...args] = interaction.content
