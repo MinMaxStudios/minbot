@@ -49,8 +49,6 @@ export default {
         mainId: undefined,
       });
       Users.update(interaction.author.id, {
-        points: 0,
-        dailyPoints: 0,
         mainId: id,
       });
 
