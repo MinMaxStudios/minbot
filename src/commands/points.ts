@@ -13,6 +13,7 @@ export default {
     const allUsers = Users.getAll();
     const rank = allUsers
       .sort((a, b) => b.points - a.points)
+      .filter(user => !user.mainId)
       .findIndex(u => u.id === user.id) + 1;
     interaction.reply(
       `${interaction.author.name}, you currently have ${

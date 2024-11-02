@@ -14,6 +14,7 @@ export default {
     const allUsers = Users.getAll();
     const rank = allUsers
       .sort((a, b) => b.dailyPoints - a.dailyPoints)
+      .filter(user => !user.mainId)
       .findIndex(u => u.id === user.id) + 1;
 
     interaction.reply(
