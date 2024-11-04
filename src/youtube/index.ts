@@ -49,9 +49,6 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
     }
 
     activeUsers.set(interaction.author.id, Date.now());
-    if (user.mainId) {
-      activeUsers.set(user.mainId, Date.now());
-    }
 
     if (interaction.content.startsWith("!")) {
       const [commandName, ...args] = interaction.content

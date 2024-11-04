@@ -10,8 +10,8 @@ async function main() {
   const db = await dbFile.json();
 
   for (const user of db.users) {
-    if (!user.dailyPoints)
-      user.dailyPoints = 0;
+    if (user.mainId)
+      delete user.mainId;
   }
 
   await Bun.write(dbPath, JSON.stringify(db));
