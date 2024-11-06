@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { mkdir } from "node:fs/promises";
+import { mkdir, readdir } from "node:fs/promises";
 import { join } from "node:path";
 
 interface Database {
@@ -26,6 +26,7 @@ interface Database {
 export type User = Database["users"][number];
 
 const dbPath = join(process.cwd(), "db.json");
+const backupsPath = join(process.cwd(), "backups");
 export const defaultDb = {
   users: [],
   votes: [],
@@ -46,7 +47,15 @@ if (!existsSync(dbPath)) {
 }
 
 const dbFile = Bun.file(dbPath);
-const db: Database = await dbFile.json();
+let dbText = await dbFile.text();
+if (dbText === "" && existsSync(backupsPath)) {
+  const backups = await readdir(backupsPath);
+  const latestBackup = backups.sort((a, b) => b.localeCompare(a))[0];
+  dbText = await Bun.file(join(backupsPath, latestBackup)).text();
+  await Bun.write(dbPath, dbText);
+}
+
+const db: Database = JSON.parse(dbText);
 
 export class Users {
   static get(id: string) {
@@ -129,7 +138,6 @@ export function incrementCount() {
   db.count++;
 }
 
-const backupsPath = join(process.cwd(), "backups");
 setInterval(async () => {
   if (!existsSync(backupsPath))
     await mkdir(backupsPath);
