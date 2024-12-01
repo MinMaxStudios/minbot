@@ -22,9 +22,10 @@ export function startPoints(mc: Masterchat) {
       if (Date.now() - lastMessageTime > POINTS_DURATION)
         activeUsers.delete(userId);
 
+      const pointsToAdd = random(1, 5);
       Users.update(userId, {
-        points: Users.get(userId)!.points + random(1, 5),
-        dailyPoints: Users.get(userId)!.dailyPoints + random(1, 5),
+        points: Users.get(userId)!.points + pointsToAdd,
+        dailyPoints: Users.get(userId)!.dailyPoints + pointsToAdd,
       });
     }
 
