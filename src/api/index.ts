@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 
-import { getCount, getMessages, Users } from "@/utils/db";
+import { getCount, getMessages, Users, Votes } from "@/utils/db";
 
 export const api = new Hono().use(cors());
 
@@ -33,10 +33,24 @@ api.get("/lb/daily-points", (c) => {
   });
 });
 
+api.get("/lb/votes", (c) => {
+  const votes = Votes.getAll();
+  return c.json({
+    votes: votes
+      .sort((a, b) => b.votes - a.votes)
+      .map(vote => ({
+        id: vote.id,
+        votes: vote.votes,
+      })),
+  });
+});
+
 api.get("/total", (c) => {
   const users = Users.getAll();
+  const votes = Votes.getAll();
   return c.json({
     points: users.reduce((acc, user) => acc + user.points, 0),
+    votes: votes.reduce((acc, vote) => acc + vote.votes, 0),
     messages: getMessages(),
   });
 });
