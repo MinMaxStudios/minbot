@@ -46,6 +46,7 @@ export function startPoints(mc: Masterchat) {
       for (const user of users) {
         Users.update(user.id, {
           dailyPoints: 0,
+          dailyMessages: 0,
         });
       }
     },
