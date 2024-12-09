@@ -10,8 +10,10 @@ async function main() {
   const db = await dbFile.json();
 
   for (const user of db.users) {
-    if (user.mainId)
-      delete user.mainId;
+    if (!user.messages)
+      user.messages = 0;
+    if (!user.dailyMessages)
+      user.dailyMessages = 0;
   }
 
   await Bun.write(dbPath, JSON.stringify(db));

@@ -48,6 +48,11 @@ async function processChats(mc: Masterchat, chats: AddChatItemAction[]) {
       });
     }
 
+    Users.update(interaction.author.id, {
+      messages: Users.get(interaction.author.id)!.messages + 1,
+      dailyMessages: Users.get(interaction.author.id)!.dailyMessages + 1,
+    });
+
     activeUsers.set(interaction.author.id, Date.now());
 
     if (interaction.content.startsWith("!")) {

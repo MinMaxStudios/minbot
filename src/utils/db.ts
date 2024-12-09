@@ -9,6 +9,8 @@ interface Database {
     avatar: string;
     points: number;
     dailyPoints: number;
+    messages: number;
+    dailyMessages: number;
   }[];
   cooldowns: {
     id: string;
@@ -37,6 +39,8 @@ export const defaultDb = {
 export const defaultUser = {
   points: 0,
   dailyPoints: 0,
+  messages: 0,
+  dailyMessages: 0,
 };
 
 if (!existsSync(dbPath)) {
