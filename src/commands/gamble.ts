@@ -48,7 +48,7 @@ export default {
     }
     else {
       const amountLost = Number(
-        (amount * (Math.random() * 0.1)).toFixed(0),
+        (amount * (Math.random() * (amount < 1000 ? 0.5 : 0.1))).toFixed(0),
       );
 
       user.points -= amountLost;
