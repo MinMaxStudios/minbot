@@ -10,6 +10,7 @@ const names = {
 
 export default {
   name: "vote",
+  cooldown: 10 * 1000,
   run: ({ interaction, args }) => {
     const votee = args[0]?.toLowerCase();
     if (!votee) {
